@@ -1,0 +1,31 @@
+import { ArticlePartner } from '../database/entities/article.partner.entity';
+import { Repository } from 'typeorm';
+import { ScraperService } from '../scraper/scraper.service';
+import { ArticlePartnerService } from '../article/partner/article.partner.service';
+import { Users } from '../database/entities/users.entity';
+import { ArticlePartnerListResponse, ArticlePartnerStruct, ImageReturn } from '../article/partner/article.partner.model';
+import { ArticleWebService } from '../article/web/article.web.service';
+import { ArticleWeb } from "../database/entities/article.web.entity";
+import { google } from "@google-cloud/vision/build/protos/protos";
+import INormalizedVertex = google.cloud.vision.v1.INormalizedVertex;
+export declare class AnalysisService {
+    private articleRepository;
+    private articleWebRepository;
+    private scraperService;
+    private ArticleService;
+    private ArticleWebService;
+    private usersRepository;
+    constructor(articleRepository: Repository<ArticlePartner>, articleWebRepository: Repository<ArticleWeb>, scraperService: ScraperService, ArticleService: ArticlePartnerService, ArticleWebService: ArticleWebService, usersRepository: Repository<Users>);
+    static computeRectangleArea(points: INormalizedVertex[]): number;
+    static getIntersectionAreaVertices(rect1: INormalizedVertex[], rect2: INormalizedVertex[]): number;
+    static convertArticlePartnerListToArticlePartnerStructList(article: ArticlePartner[]): ArticlePartnerStruct[];
+    static orderBySharedArea(articleWeb: any, articlesPartner: any): ArticlePartnerStruct[];
+    static orderByAmountOfDetails(articleWeb: any, articlePartner: any): ArticlePartnerStruct[];
+    static computeRgbDistance(color1: number[], color2: number[]): number;
+    static orderByColor(articleWeb: any, articlePartner: any, colorThreshold: any): ArticlePartnerStruct[];
+    getAllArticle(minPrice: any, maxPrice: any): Promise<ArticlePartnerStruct[]>;
+    findAlternativebyImage(image: string, minPrice: number, maxPrice: number, likeliness: number): Promise<ArticlePartnerListResponse>;
+    findAlternative(URL: string, likeliness: number, minPrice: number, maxPrice: number): Promise<ArticlePartnerListResponse>;
+    uploadImages(file: any): Promise<ImageReturn>;
+    private saveFile;
+}

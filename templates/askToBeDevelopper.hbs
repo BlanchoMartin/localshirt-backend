@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Demande de Devenir Développeur</title>
+
+  <style>
+    .container {
+      border-radius: 10px;
+      background: linear-gradient(to bottom, #99AF8C, #EFEFEF);
+      text-align: center;
+      padding: 20px;
+    }
+
+    .logo {
+      margin-bottom: 20px;
+    }
+
+    .thank-you {
+      color: #8C8C8C;
+      text-align: center;
+      font-size: 80px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+
+    .inner-container {
+      border-radius: 26px;
+      border: 1px solid #808080;
+      background: #FFF;
+      padding: 20px;
+      flex-shrink: 0;
+    }
+
+    .centered-text {
+      color: #504D4D;
+      text-align: center;
+      font-size: 30px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 30px;
+    }
+
+    .url-link {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .final-message {
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    .localshirt {
+      color: #99AF8C;
+      font-size: 30px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="logo">
+    <span class='localshirt'>LocalShirt</span>
+    <img src="./templates/img.png" alt="Logo" width="100">
+  </div>
+  <div class="thank-you">
+    Demande de Devenir Développeur
+  </div>
+  <div class="inner-container">
+    <div class="centered-text">
+      Vous avez reçu une demande pour devenir développeur.
+    </div>
+    <div class="centered-text">
+      Pour accepter la demande, veuillez cliquer sur le lien ci-dessous :
+    </div>
+    <div class="centered-text">
+      <a class="url-link" href="{{ confirmationLink }}">Cliquez ici pour accepter la demande</a>
+    </div>
+  </div>
+  <div class="final-message">
+    Nous vous remercions pour votre implication dans le processus de sélection des développeurs.
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+    "register": {
+      "arguments": {
+        "email": "martinblancho3@gmail.com",
+        "password": "localshirt2001",
+        "name": "Pascal",
+        "lastName": "Prout",
+        "businessName": "Le Slip Français",
+        "businessRole": "Manager",
+        "businessContact": "0607884567"
+      },
+      "returnFields": ["status", "content { msg, email, access_token }"]
+    },
+    "login": {
+      "arguments": {
+        "email": "martin.blancho@epitech.eu",
+        "password": "password123"
+      },
+      "returnFields": ["status", "content { msg, email, access_token }"]
+    }
+}

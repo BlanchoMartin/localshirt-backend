@@ -1,0 +1,305 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Server Documentation auth/auth.resolver.ts</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">Localshirt Server Documentation</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                 
+                    
+                        <a
+                            class="link user-link "
+                            href="https://github.com/ErwanSimonetti/LocalShirto"
+                        >
+                            Github
+                        </a>
+                    
+                        <a
+                            class="link user-link "
+                            href="https://www.notion.so/0d4551e8e0bf46d0949377e09a75ea0b?v=495390718b594a409ffc0a7b0d46505d"
+                        >
+                            Notion
+                        </a>
+                    
+                        <a
+                            class="link user-link "
+                            href="https://linear.app/localshirt/team/SHIRT/all"
+                        >
+                            Linear
+                        </a>
+                    
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="article_web_article.web.module.module_ts.html">ts</a></li></ul><h3>Global</h3><ul><li><a href="global.html#bootstrap">bootstrap</a></li></ul></div><div class="category"><h2>DTOs</h2><h3>Classes</h3><ul><li><a href="ArticleDto.html">ArticleDto</a></li><li><a href="QuestionDTO.html">QuestionDTO</a></li></ul></div><div class="category"><h2>Resolvers</h2><h3>Classes</h3><ul><li><a href="ArticlePartnerResolver.html">ArticlePartnerResolver</a></li><li><a href="AuthResolver.html">AuthResolver</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>auth/auth.resolver.ts</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Resolver, Args, Context, Query } from '@nestjs/graphql';
+import { AuthService } from './auth.service';
+import { Req, UseGuards } from '@nestjs/common';
+import {AuthResponse, CompaniesListResponse, Company, User, UserAuthResponse} from './auth.model';
+import { AuthGuard } from './strategy/jwt-auth.guard';
+
+/**
+ * Auth Resolver
+ * 
+ * @category Resolvers
+ * @class
+ * @classdesc Resolver for auth queries
+ */
+@Resolver()
+export class AuthResolver {
+  constructor(private authService: AuthService) {}
+
+ /**
+ * Login
+ * 
+ * @async
+ * @returns {Promise&lt;AuthResponse>} A token of connexion
+ */
+  @Query((returns) => AuthResponse)
+  async login(
+    @Args('email') email: string,
+    @Args('password') password: string,
+  ) {
+    return this.authService.login({ email, password });
+  }
+
+ /**
+ * Register
+ * 
+ * @async
+ * @returns {Promise&lt;AuthResponse>} A token of connexion
+ */
+  @Query((returns) => AuthResponse)
+  async register(
+    @Args('email') email: string,
+    @Args('password') password: string,
+    @Args('name') name: string,
+    @Args('lastName') lastName: string,
+    @Args('businessRole') businessRole: string,
+    @Args('businessContact') businessContact: string,
+    @Args('businessName') businessName: string,
+    @Args('businessLogo') businessLogo: string,
+    @Args('businessDescription') businessDescription: string,
+    @Args('businessLink') businessLink: string,
+    @Context() context,
+  ) {
+    return this.authService.createUser(
+      {
+        email,
+        password,
+        name,
+        lastName,
+        businessRole,
+        businessContact,
+        businessName,
+        businessLogo,
+        businessDescription,
+        businessLink
+      },
+      context.req,
+    );
+  }
+
+  @Query((returns) => AuthResponse)
+  async confirm(@Args('token') token: string) {
+    return this.authService.confirmRegistration(token);
+  }
+
+  @Query((returns) => AuthResponse)
+  async send_email_password(@Args('email') email: string, @Context() context) {
+    return this.authService.send_email_password({ email }, context.req);
+  }
+
+  @Query((returns) => AuthResponse)
+  async forget_password(
+    @Args('resetPasswordReference') resetPasswordReference: string,
+    @Args('password') password: string,
+    @Args('confirm_password') confirm_password: string,
+    @Context() context,
+  ) {
+    return this.authService.change_password({
+      resetPasswordReference,
+      password,
+      confirm_password,
+    });
+  }
+
+  @UseGuards(AuthGuard)
+  @Query((returns) => UserAuthResponse)
+  async profile(@Context() context) {
+    return this.authService.getUser(context.req.user);
+  }
+
+  @Query((returns) => AuthResponse)
+  async delete_connected_user(@Context() context) {
+    return this.authService.deleteUserConnected(context.req);
+  }
+
+  @Query((returns) => AuthResponse)
+  async user_ask_dev_perm(@Context() context) {
+    return this.authService.userAskDev(context.req);
+  }
+
+  @Query((returns) => AuthResponse)
+  async confirmDev(@Args('token') token: string) {
+    return this.authService.giveDevPermission(token);
+  }
+
+  @Query((returns) => AuthResponse)
+  async delete_user_by_id(@Args('id') id: string, @Context() context) {
+    return this.authService.deleteByDeveloper(id, context.req);
+  }
+
+  @Query((returns) => AuthResponse)
+  async update_connected_user(
+    @Args('name', { defaultValue: 'null' }) name: string,
+    @Args('lastName', { defaultValue: 'null' }) lastName: string,
+    @Args('businessRole', { defaultValue: 'null' }) businessRole: string,
+    @Args('businessContact', { defaultValue: 'null' }) businessContact: string,
+    @Args('businessName', { defaultValue: 'null' }) businessName: string,
+    @Args('businessAdress', { defaultValue: 'null' }) businessAdress: string,
+    @Args('businessZipCode', { defaultValue: 'null' }) businessZipCode: string,
+    @Args('businessCity', { defaultValue: 'null' }) businessCity: string,
+    @Args('businessCountry', { defaultValue: 'null' }) businessCountry: string,
+    @Args('image', { defaultValue: 'null' }) image: string,
+    @Context() context,
+  ) {
+    return this.authService.updateConnectedUser({
+      name,
+      lastName,
+      businessRole,
+      businessContact,
+      businessName,
+      businessAdress,
+      businessZipCode,
+      businessCity,
+      businessCountry
+     }, context.req);
+  }
+
+  @Query((returns) => AuthResponse)
+  async update_email_user_by_id(
+    @Args('id') id: string,
+    @Args('email') email: string,
+    @Context() context,
+  ) {
+    return this.authService.updateEmailById(
+      context.req,
+      id,
+      email);
+  }
+
+    @Query((returns: void) => CompaniesListResponse)
+    async get_companies(): Promise&lt;CompaniesListResponse> {
+        return await this.authService.getCompanies();
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+{
+    "opts": {
+        "recurse": true,
+        "destination": "docs",
+        "template": "node_modules/better-docs",
+        "readme": "README.md",
+        "encoding": "utf8",
+        "verbose": true
+    },
+    "templates": {
+        "better-docs": {
+            "name": "Localshirt Server Documentation",
+            "title": "Server Documentation",
+            "navLinks": [
+                {
+                    "label": "Github",
+                    "href": "https://github.com/ErwanSimonetti/LocalShirto"
+                },
+                {
+                    "label": "Notion",
+                    "href": "https://www.notion.so/0d4551e8e0bf46d0949377e09a75ea0b?v=495390718b594a409ffc0a7b0d46505d"
+                },
+                {
+                    "label": "Linear",
+                    "href": "https://linear.app/localshirt/team/SHIRT/all"
+                }
+            ]
+        }
+    },
+    "tags": {
+        "allowUnknownTags": true
+    },
+    "plugins": [
+        "plugins/markdown",
+        "node_modules/better-docs/typescript",
+        "node_modules/better-docs/category"
+    ],
+    "source": {
+        "include": ["src"],
+        "includePattern": ".(ts)$"
+    }
+}
